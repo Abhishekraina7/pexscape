@@ -15,7 +15,7 @@ class Wallpapers extends StatefulWidget {
 }
 
 class _WallpapersState extends State<Wallpapers> {
-   List image = [];
+   List<dynamic> image = [];
    int page_no  = 1;
 
    @override
@@ -42,7 +42,7 @@ class _WallpapersState extends State<Wallpapers> {
 
   Future<dynamic>LoadmoreImage() async {
      setState(() {
-       page_no += 1;
+       page_no = page_no + 1;
      });
      String url = 'https://api.pexels.com/v1/curated?per_page=80&page=$page_no';
      await http.get(
@@ -50,12 +50,17 @@ class _WallpapersState extends State<Wallpapers> {
          headers: {
            'Authorization': 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi', // this is the api-key
          }).then((value) {
+           if(value.statusCode == 200){
        Map result = jsonDecode(value.body);
+       print(result);
        setState(() {
-         image.addAll(result['photo']);
-       });
+         image.addAll(result['photos']);
+       });}
+           else{
+             print("NO response");
+           }
      });
-  }
+   }
   @override
 
   Widget build(BuildContext context) {
@@ -63,7 +68,7 @@ class _WallpapersState extends State<Wallpapers> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: null,
-        title: Center(child: const Text("PexScape",style: TextStyle(fontWeight: FontWeight.w500),)),
+        title: const Center(child: Text("PexScape",style: TextStyle(fontWeight: FontWeight.w500),)),
       ),
       body: Column(
         children: [
