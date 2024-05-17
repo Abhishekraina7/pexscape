@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pexscape/Wallpaper.dart';
+import 'package:pexscape/splash_screeb.dart';
 
 
 
@@ -17,11 +17,11 @@ class Pexscape extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         appBarTheme:const AppBarTheme(color: Colors.blue),
-        scaffoldBackgroundColor: const Color(0xFFEEEEEE),
+        scaffoldBackgroundColor: const Color(0xFF000000),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.purple),
-        textTheme:const TextTheme(bodyMedium: TextStyle(color: Colors.black)),
+        textTheme:const TextTheme(bodyMedium: TextStyle(color: Colors.black,fontFamily: 'serif')),
       ),
-       home: Wallpapers(),
+       home: SplashScreen(),
     );
   }
 }
