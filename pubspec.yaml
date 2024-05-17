@@ -17,6 +17,7 @@ dependencies:
   wallpaper: ^1.1.1
   flutter_wallpaper_manager: ^0.0.4 #this dependency helps in setting the selected image as the Home n Lock_screen wallpaper
   permission_handler: ^9.0.0
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -29,5 +30,7 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - Images/Designer.jpeg
 
 
