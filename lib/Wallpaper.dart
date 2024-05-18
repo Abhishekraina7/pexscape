@@ -16,6 +16,9 @@ class Wallpapers extends StatefulWidget {
 class _WallpapersState extends State<Wallpapers> {
    List<dynamic> image = [];
    int page_no  = 1;
+   final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi';
+   late String searchQuery;
+   bool showSearchBar = false; // This varible is used for showing the SearchBar when search Icons is clicked
 
    @override
   void initState() {
@@ -23,43 +26,55 @@ class _WallpapersState extends State<Wallpapers> {
      fetchapi();
    }
 
-   Future<void>fetchapi() async {
-    await http.get(
-        Uri.parse('https://api.pexels.com/v1/curated'), // This endpoint enables you to receive real-time photos curated by the Pexels team.
-        headers: {
-          'Authorization': 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi', // this is the api-key
-        }).then((value)
-// print(value.body) // this prints the body of the response that comes from the api
-    {
-      Map result = jsonDecode(value.body); // json function which will decode the body response from the api into a map of key value pairs in json format
-       setState(() {
-        image = result['photos']; // this functions simply updates the state and lets the builder function know that some data (photos) is being added to the image list
-      });
-    }
-    );
-  }
+   Future<void> fetchapi({String query = ''}) async { // Optional query parameter
+     String url = 'https://api.pexels.com/v1/curated?per_page=80&page=$page_no';
+     if (query.isNotEmpty) {
+       url = 'https://api.pexels.com/v1/search?query=$query&per_page=80&page=$page_no';
+     }
+     await http.get(
+       Uri.parse(url),
+       headers: {
+         'Authorization': api_Key,
+       },
+     ).then((value) {
+       if (value.statusCode == 200) {
+         Map result = jsonDecode(value.body);
+         setState(() {
+           if (page_no == 1) {
+             image = result['photos']; // Clear image list for initial search
+           } else {
+             image.addAll(result['photos']); // Add fetched images on load more
+           }
+         });
+       } else {
+         print("Error fetching data");
+       }
+     });
+   }
 
-  Future<dynamic>LoadmoreImage() async {
+   Future<dynamic> loadMoreImage() async {
      setState(() {
        page_no = page_no + 1;
      });
-     String url = 'https://api.pexels.com/v1/curated?per_page=80&page=$page_no';
-     await http.get(
-         Uri.parse(url), // This endpoint enables you to receive real-time photos curated by the Pexels team.
-         headers: {
-           'Authorization': 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi', // this is the api-key
-         }).then((value) {
-           if(value.statusCode == 200){ // if the response is okay
-       Map result = jsonDecode(value.body); // we store the body of the json response in a map ( key-value pairs)
-       print(result);
-       setState(() {
-         image.addAll(result['photos']); // this function adds all data of photo key value into the image list
-       });}
-           else{
-             print("NO response");
-           }
+     await fetchapi(query: searchQuery); // Call fetchapi with updated page number and search query
+   }
+
+   void searchImages(String query) {
+     setState(() {
+       searchQuery = query;
+       image = []; // Clear image list for new search
+       page_no = 1; // Reset page number for new search
+     });
+     fetchapi(query: query); // Call fetchapi with the provided search query
+   }
+
+   void toggleSearchBar() { // This function is used to display the SeachBar when the user clicks on the Seach Icons
+     setState(() {
+       showSearchBar = !showSearchBar;
      });
    }
+
+
   @override
 
   Widget build(BuildContext context) {
@@ -68,9 +83,44 @@ class _WallpapersState extends State<Wallpapers> {
         backgroundColor: Colors.black,
         leading: null,
         title: const Center(child: Text("PexScape",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search,color: Colors.white,),
+            onPressed: toggleSearchBar,
+          ),
+        ],
       ),
       body: Column(
         children: [
+          if(showSearchBar) // If you clicked on the SeachIcon the showSeachBar condition will be true and the TextField or Serach bar will be displayed
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10.0))
+              ),
+              // This is used to take the seach query from the user
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Search wallpapers',
+                  hintStyle: TextStyle(fontFamily: 'sans',color: Colors.grey),
+                  focusColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value; // Update search query on input change
+                    image = []; // Clear image list for new search
+                    page_no = 1; // Reset page number for new search
+                  });
+                  fetchapi(); // Fetch images based on the new search query
+                },
+              ),
+            ),
+          ),
           Expanded(
               child: Container(
                 child: GridView.builder( // grid view to show the images from api response
@@ -102,7 +152,7 @@ class _WallpapersState extends State<Wallpapers> {
          const  SizedBox(height: 10),
           InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
             onTap: (){
-              LoadmoreImage(); // In our case we are calling the Loadmore function to load more images in the gridview
+              loadMoreImage(); // In our case we are calling the Loadmore function to load more images in the gridview
             },
             child: Container(
               height: 50,
