@@ -19,7 +19,7 @@ class Pexscape extends StatelessWidget {
         appBarTheme:const AppBarTheme(color: Colors.blue),
         scaffoldBackgroundColor: const Color(0xFF000000),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.purple),
-        textTheme:const TextTheme(bodyMedium: TextStyle(color: Colors.black,fontFamily: 'serif')),
+        textTheme:const TextTheme(bodyMedium: TextStyle(color: Colors.black,fontFamily: 'sans')),
       ),
        home: SplashScreen(),
     );
