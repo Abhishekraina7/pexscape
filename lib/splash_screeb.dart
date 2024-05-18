@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pexscape/Wallpaper.dart';
+
 
 
 class SplashScreen extends StatelessWidget {
@@ -13,7 +15,7 @@ class SplashScreen extends StatelessWidget {
        children: [
          const Positioned.fill( // Cover entire screen
            child: Image(
-             image: AssetImage('assets/Designer.jpeg'),
+             image: AssetImage('Images/Pinterest1.jpg'),
              fit: BoxFit.cover, // Adjust fit as needed
            ),
          ),
@@ -23,26 +25,32 @@ class SplashScreen extends StatelessWidget {
            right: 0,
          child: Column(
            children: [
-             const Text('Explore Pexel',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),),
-             const Text('Wallpaper',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),),
-             const SizedBox(height: 15,),
-             const Text('Get ready to be amazed',style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, ),),
+             // const Text('No Fucking',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40,color: Colors.white),),
+             // const Text('Excuses',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color: Colors.white),),
+             // const SizedBox(height: 15,),
+             // const Text('And ',style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20,color: Colors.white),),
              const SizedBox(height: 50,),
              Center(
-               child: Container(
-                 height: 50,
-                 width: 350,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(20.0), // Set the desired radius
-                   color: Colors.black, // Set the container color
+               child: InkWell(
+                 onTap: () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => const Wallpapers()),
+                   );
+                   },
+                 child: Container(
+                   height: 50,
+                   width: 350,
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(20.0), // Set the desired radius
+                     color: Colors.blueAccent, // Set the container color
+                   ),
+                   child: const Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                     Text('Get Started',style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20, color: Colors.white),),
+                     SizedBox(width: 10,),
+                     Icon(Icons.rocket_launch_sharp,color: Colors.white,),
+                   ],),
                  ),
-                 child: const Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                   Text('Get Started',style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20, color: Colors.white),),
-                   SizedBox(width: 10,),
-                   Icon(Icons.rocket_launch_sharp,color: Colors.white,),
-                 ],),
                ),
              ),
              const SizedBox(height: 25,),
