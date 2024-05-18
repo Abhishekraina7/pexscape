@@ -49,21 +49,49 @@ class FullImage extends StatelessWidget {
           ),
         ),
          const  SizedBox(height: 20,),
-          InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
-            onTap: (){
-              setWallpaper(context); // In our case we are calling the Loadmore function to load more images in the gridview
-            },
-            child: Container(
-              margin: EdgeInsets.only(bottom: 5.0),
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0), // Set the desired radius
-                color: Colors.white, // Set the container color
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
+                onTap: (){
+                  setWallpaper(context); // In our case we are calling the Loadmore function to load more images in the gridview
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 5.0),
+                  height: 50,
+                  width: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0), // Set the desired radius
+                    color: Colors.white, // Set the container color
+                  ),
+                  child:  const Center(child: Text("Set as Wallpaper", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)),
+                ),
               ),
-              child:  const Center(child: Text("Set as Wallpaper", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)),
-            ),
-          )
+              const SizedBox(width: 50,),
+              InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
+                onTap: (){
+                  setWallpaper(context); // In our case we are calling the Loadmore function to load more images in the gridview
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 5.0),
+                  height: 50,
+                  width: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0), // Set the desired radius
+                    color: Colors.white, // Set the container color
+                  ),
+                  child:  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                       Center(child: Text("Download", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)),
+                       Icon(Icons.download,color: Colors.black,),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+
         ], 
       ),
     );
