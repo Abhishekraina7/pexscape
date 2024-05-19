@@ -5,7 +5,7 @@ import 'package:pexscape/splash_screeb.dart';
 
 void main()
 {
-  runApp(Pexscape());
+  runApp(const Pexscape());
 }
 
 
@@ -21,7 +21,7 @@ class Pexscape extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.purple),
         textTheme:const TextTheme(bodyMedium: TextStyle(color: Colors.black,fontFamily: 'sans')),
       ),
-       home: SplashScreen(),
+       home: const SplashScreen(),
     );
   }
 }
