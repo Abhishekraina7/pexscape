@@ -18,7 +18,6 @@ class _WallpapersState extends State<Wallpapers> {
    int page_no  = 1;
    final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi';
    late String searchQuery;
-   bool showSearchBar = false; // This varible is used for showing the SearchBar when search Icons is clicked
 
    @override
   void initState() {
@@ -68,12 +67,6 @@ class _WallpapersState extends State<Wallpapers> {
      fetchapi(query: query); // Call fetchapi with the provided search query
    }
 
-   void toggleSearchBar() { // This function is used to display the SeachBar when the user clicks on the Seach Icons
-     setState(() {
-       showSearchBar = !showSearchBar;
-     });
-   }
-
 
   @override
 
@@ -81,18 +74,11 @@ class _WallpapersState extends State<Wallpapers> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: null,
         title: const Center(child: Text("PexScape",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search,color: Colors.white,),
-            onPressed: toggleSearchBar,
-          ),
-        ],
+        automaticallyImplyLeading: false, // This line removes the back arrow which was coming bacause of Navigation from the SplashScreen
       ),
       body: Column(
         children: [
-          if(showSearchBar) // If you clicked on the SeachIcon the showSeachBar condition will be true and the TextField or Serach bar will be displayed
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -101,23 +87,30 @@ class _WallpapersState extends State<Wallpapers> {
                 borderRadius: BorderRadius.all(Radius.circular(10.0))
               ),
               // This is used to take the seach query from the user
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Search wallpapers',
-                  hintStyle: TextStyle(fontFamily: 'sans',color: Colors.grey),
-                  focusColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              child: Row(children: [
+                SizedBox(
+                  width: 330,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Search wallpapers',
+                      hintStyle: TextStyle(fontFamily: 'sans',color: Colors.grey),
+                      focusColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value; // Update search query on input change
+                        image = []; // Clear image list for new search
+                        page_no = 1; // Reset page number for new search
+                      });
+                      fetchapi(); // Fetch images based on the new search query
+                    },
                   ),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value; // Update search query on input change
-                    image = []; // Clear image list for new search
-                    page_no = 1; // Reset page number for new search
-                  });
-                  fetchapi(); // Fetch images based on the new search query
-                },
+                const Icon(Icons.search,color: Colors.black,),
+              ],
               ),
             ),
           ),
