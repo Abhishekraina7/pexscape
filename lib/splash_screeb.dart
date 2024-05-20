@@ -41,14 +41,14 @@ class SplashScreen extends StatelessWidget {
                    width: 350,
                    decoration: BoxDecoration(
                      borderRadius: BorderRadius.circular(20.0), // Set the desired radius
-                     color: Colors.blueAccent, // Set the container color
+                     color: Colors.white, // Set the container color
                    ),
                    child: const Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
-                     Text('Get Started',style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20, color: Colors.white),),
+                     Text('Get Started',style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20, color: Colors.black),),
                      SizedBox(width: 10,),
-                     Icon(Icons.rocket_launch_sharp,color: Colors.white,),
+                     Icon(Icons.rocket_launch_sharp,color: Colors.black,),
                    ],),
                  ),
                ),
