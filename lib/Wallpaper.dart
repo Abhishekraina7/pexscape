@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:pexscape/full_image_screen.dart';
 
 
-// API KEY: KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi
-
 class Wallpapers extends StatefulWidget {
   const Wallpapers({super.key});
 
@@ -16,28 +14,29 @@ class Wallpapers extends StatefulWidget {
 class _WallpapersState extends State<Wallpapers> {
    List<dynamic> image = [];
    int page_no  = 1;
-   final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi';
+   final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi'; // API key from Pexel website, which will act as the Authorization header
    late String searchQuery;
 
    @override
-  void initState() {
+  void initState() { // We used this so that the first thing that happens when widget tree is build is to call the fetch-api function
      super.initState();
      fetchapi();
    }
-
-   Future<void> fetchapi({String query = ''}) async { // Optional query parameter
+   // fetchapi function makes the api call based on the Search query or the default.
+   Future<void> fetchapi({String query = ''}) async {
+     // Optional query parameter
      String url = 'https://api.pexels.com/v1/curated?per_page=80&page=$page_no';
-     if (query.isNotEmpty) {
+     if (query.isNotEmpty) { // If there is query in the search box then make a api call with query parameter entered by the user
        url = 'https://api.pexels.com/v1/search?query=$query&per_page=80&page=$page_no';
      }
-     await http.get(
+     await http.get( // here the http.get request is sent to the pexels servers
        Uri.parse(url),
        headers: {
-         'Authorization': api_Key,
+         'Authorization': api_Key, // our api_key as the authorization header
        },
      ).then((value) {
        if (value.statusCode == 200) {
-         Map result = jsonDecode(value.body);
+         Map result = jsonDecode(value.body); // added the response to a hash map ( Key: value pair)
          setState(() {
            if (page_no == 1) {
              image = result['photos']; // Clear image list for initial search
@@ -58,13 +57,13 @@ class _WallpapersState extends State<Wallpapers> {
      await fetchapi(query: searchQuery); // Call fetchapi with updated page number and search query
    }
 
-   void searchImages(String query) {
+   // Triggers the search when the user clicks the search icon
+   void searchImages() {
      setState(() {
-       searchQuery = query;
        image = []; // Clear image list for new search
        page_no = 1; // Reset page number for new search
      });
-     fetchapi(query: query); // Call fetchapi with the provided search query
+     fetchapi(query: searchQuery); // Call fetchapi with the search query
    }
 
 
@@ -89,7 +88,7 @@ class _WallpapersState extends State<Wallpapers> {
               // This is used to take the seach query from the user
               child: Row(children: [
                 SizedBox(
-                  width: 330,
+                  width: 320,
                   child: TextField(
                     decoration: const InputDecoration(
                       hintText: 'Search wallpapers',
@@ -102,44 +101,41 @@ class _WallpapersState extends State<Wallpapers> {
                     onChanged: (value) {
                       setState(() {
                         searchQuery = value; // Update search query on input change
-                        image = []; // Clear image list for new search
-                        page_no = 1; // Reset page number for new search
                       });
-                      fetchapi(); // Fetch images based on the new search query
                     },
                   ),
+                ),IconButton(
+                  icon: const Icon(Icons.search, color: Colors.black),
+                  onPressed: searchImages, // Call searchImages on icon tap
                 ),
-                const Icon(Icons.search,color: Colors.black,),
               ],
               ),
             ),
           ),
           Expanded(
-              child: Container(
-                child: GridView.builder( // grid view to show the images from api response
-                  itemCount: image.length, // this means jitne photos api response mai ayege utni he grid items create hojayegei
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                         crossAxisSpacing: 5,
-                          childAspectRatio: 2/2,
-                           mainAxisSpacing: 10,
-                    ),
-                    itemBuilder: (context, index){
+              child: GridView.builder( // grid view to show the images from api response
+                itemCount: image.length, // this means jitne photos api response mai ayege utni he grid items create hojayegei
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                       crossAxisSpacing: 5,
+                        childAspectRatio: 2/2,
+                         mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index){
 
-                    return GestureDetector( // GestureDetector function takes the touch as input and immediately transfers the Image url of the image to the FullImage screen
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => FullImage(imageUrl: image[index]['src']['portrait'], photoGrapher_name: image[index]['photographer'],),)); // this is the path for pushing the url of the image on which the touch was detected
-                      },
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(0)),
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                          child: Image(image: NetworkImage(image[index]['src']['tiny']),fit: BoxFit.cover),
-                        ),
+                  return GestureDetector( // GestureDetector function takes the touch as input and immediately transfers the Image url of the image to the FullImage screen
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => FullImage(imageUrl: image[index]['src']['portrait'], photoGrapher_name: image[index]['photographer'],),)); // this is the path for pushing the url of the image on which the touch was detected
+                    },
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(0)),
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                        child: Image(image: NetworkImage(image[index]['src']['tiny']),fit: BoxFit.cover),
                       ),
-                    );
-                    }
-                ),
+                    ),
+                  );
+                  }
               ),
           ),
          const  SizedBox(height: 10),
