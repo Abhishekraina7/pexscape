@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pexscape/splash_screeb.dart';
+import 'package:pexscape/initial_screen.dart';
 
 
 
@@ -7,7 +7,6 @@ void main()
 {
   runApp(const Pexscape());
 }
-
 
 class Pexscape extends StatelessWidget {
   const Pexscape({super.key});
