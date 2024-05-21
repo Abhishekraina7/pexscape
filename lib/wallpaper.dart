@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pexscape/full_image_screen.dart';
-
+late Color current_Color;
 
 class Wallpapers extends StatefulWidget {
   const Wallpapers({super.key});
@@ -12,10 +12,12 @@ class Wallpapers extends StatefulWidget {
 }
 
 class _WallpapersState extends State<Wallpapers> {
+   List<dynamic>pre_defined_options = ['Nature Landscapes','Minimalist Art','Abstract Art','Pop Culture','Computers'];
    List<dynamic> image = [];
    int page_no  = 1;
    final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi'; // API key from Pexel website, which will act as the Authorization header
    late String searchQuery;
+   final int tappedindex = -1;
 
    @override
   void initState() { // We used this so that the first thing that happens when widget tree is build is to call the fetch-api function
@@ -66,7 +68,6 @@ class _WallpapersState extends State<Wallpapers> {
      fetchapi(query: searchQuery); // Call fetchapi with the search query
    }
 
-
   @override
 
   Widget build(BuildContext context) {
@@ -78,6 +79,38 @@ class _WallpapersState extends State<Wallpapers> {
       ),
       body: Column(
         children: [
+          Container(
+            height: 50,
+            color: Colors.black,
+            child:
+            ListView.builder(
+                scrollDirection: Axis.horizontal,//If you have defined something like coloumn you will get the renderflex error because the coloumn is not flixbble as listview
+                itemCount: 5,
+                itemBuilder: (context,index)
+                {
+                  return InkWell(
+                    onTap: (){
+                      setState(() {
+                        current_Color = index == tappedIndex ? Colors.blue : Colors.white;
+                      });
+
+                      tappedIndex = index;
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(5),
+                      height: 70,
+                      width: 150,
+                      decoration: BoxDecoration(
+                          color: current_Color == pre_defined_options[index] ? Colors.blue : Colors.white, // Set color based on tapped item,
+                          shape:BoxShape.rectangle,
+                          borderRadius: const BorderRadius.all(Radius.circular(10.0))
+                      ),
+                      child: Center(child:Text(pre_defined_options[index],style: const TextStyle(fontWeight: FontWeight.w500),)),
+                    ),
+
+                  );
+                }),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
