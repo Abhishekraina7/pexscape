@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pexscape/full_image_screen.dart';
+import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+
 
 
 class Wallpapers extends StatefulWidget {
@@ -18,6 +20,7 @@ class _WallpapersState extends State<Wallpapers> {
    final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi'; // API key from Pexel website, which will act as the Authorization header
    late String searchQuery;
    int selectedIndex = -1;
+   final NotchBottomBarController _pageController = NotchBottomBarController();
 
    @override
   void initState() { // We used this so that the first thing that happens when widget tree is build is to call the fetch-api function
@@ -79,39 +82,6 @@ class _WallpapersState extends State<Wallpapers> {
       ),
       body: Column(
         children: [
-          Container(
-            height: 50,
-            color: Colors.black,
-            child:
-            ListView.builder(
-                scrollDirection: Axis.horizontal,  //If you have defined something like coloumn you will get the renderflex error because the coloumn is not flixbble as listview
-                itemCount: pre_defined_options.length,
-                itemBuilder: (context,index)
-                {
-                  final isSelected = selectedIndex == index; //  it checks if the current item's index (index) matches the selectedIndex.
-                  return InkWell(
-                    onTap: (){
-                        setState(() {
-                          selectedIndex = index; // when you select any item in the list its index is assgined to selectedIndex variable
-                          searchQuery = pre_defined_options[index];
-                          searchImages(); // when you tap on any list item new wallpapers get loaded in the gridview.
-                        });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.all(5),
-                      height: 70,
-                      width: 150,
-                      decoration:  BoxDecoration(
-                          color: isSelected ? Colors.grey : Colors.white,   //condition for giving color to list items. The item whose index matches the selectedIndex condition will be greyish and other items will be white
-                          shape:BoxShape.rectangle,
-                          borderRadius: const BorderRadius.all(Radius.circular(10.0))
-                      ),
-                      child: Center(child:Text(pre_defined_options[index],style: const TextStyle(fontWeight: FontWeight.w500),)),
-                    ),
-                  );
-                }
-                ),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -146,6 +116,39 @@ class _WallpapersState extends State<Wallpapers> {
               ),
             ),
           ),
+          Container(
+            height: 50,
+            color: Colors.black,
+            child:
+            ListView.builder(
+                scrollDirection: Axis.horizontal,  //If you have defined something like coloumn you will get the renderflex error because the coloumn is not flixbble as listview
+                itemCount: pre_defined_options.length,
+                itemBuilder: (context,index)
+                {
+                  final isSelected = selectedIndex == index; //  it checks if the current item's index (index) matches the selectedIndex.
+                  return InkWell(
+                    onTap: (){
+                      setState(() {
+                        selectedIndex = index; // when you select any item in the list its index is assgined to selectedIndex variable
+                        searchQuery = pre_defined_options[index];
+                        searchImages(); // when you tap on any list item new wallpapers get loaded in the gridview.
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(5),
+                      height: 70,
+                      width: 150,
+                      decoration:  BoxDecoration(
+                          color: isSelected ? Colors.grey : Colors.white,   //condition for giving color to list items. The item whose index matches the selectedIndex condition will be greyish and other items will be white
+                          shape:BoxShape.rectangle,
+                          borderRadius: const BorderRadius.all(Radius.circular(10.0))
+                      ),
+                      child: Center(child:Text(pre_defined_options[index],style: const TextStyle(fontWeight: FontWeight.w500),)),
+                    ),
+                  );
+                }
+            ),
+          ),
           Expanded(
               child: GridView.builder( // grid view to show the images from api response
                 itemCount: image.length, // this means jitne photos api response mai ayege utni he grid items create hojayegei
@@ -173,21 +176,64 @@ class _WallpapersState extends State<Wallpapers> {
               ),
           ),
          const  SizedBox(height: 10),
-          InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
-            onTap: (){
-              loadMoreImage(); // In our case we are calling the Loadmore function to load more images in the gridview
-            },
-            child: Container(
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0), // Set the desired radius
-                color: Colors.white, // Set the container color
-              ),
-              child:  const Center(child: Text("Load more", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),)),
-            ),
-          )
+          // InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
+          //   onTap: (){
+          //     loadMoreImage(); // In our case we are calling the Loadmore function to load more images in the gridview
+          //   },
+          //   child: Container(
+          //     height: 50,
+          //     width: 200,
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(20.0), // Set the desired radius
+          //       color: Colors.white, // Set the container color
+          //     ),
+          //     child:  const Center(child: Text("Load more", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),)),
+          //   ),
+          // )
         ],
+      ),
+      bottomNavigationBar: AnimatedNotchBottomBar(
+        notchBottomBarController: _pageController,
+        bottomBarItems: const [
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.home_filled,
+              color: Colors.blueGrey,
+            ),
+            activeItem: Icon(
+              Icons.home_filled,
+              color: Colors.blueAccent,
+            ),
+            itemLabel: 'Page1',
+          ),
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.category,
+              color: Colors.blueGrey,
+            ),
+            activeItem: Icon(
+              Icons.category,
+              color: Colors.blueAccent,
+            ),
+            itemLabel: 'Page2',
+          ),
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.monitor_heart_rounded,
+              color: Colors.blueGrey,
+            ),
+            activeItem: Icon(
+              Icons.monitor_heart_rounded,
+              color: Colors.blueAccent,
+            ),
+            itemLabel: 'Page2',
+          ),
+        ],
+        onTap: (int index){
+           // TODO: oye complete this shit
+        },
+        kIconSize: 6,
+        kBottomRadius: 8,
       ),
     );
   }
