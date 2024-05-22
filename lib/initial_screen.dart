@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pexscape/Wallpaper.dart';
+import 'package:pexscape/wallpaper.dart';
 
 
 
