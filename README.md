@@ -1,7 +1,7 @@
 **Pexscape**
 ===================================================================
 
-### Pexscape is a visually stunning Flutter app that lets you browse and set curated real-time photos as your wallpaper. It leverages the Pexels API to provide a vast collection of high-quality images, making it a perfect choice for anyone who wants to personalize their device with fresh, eye-catching wallpapers.
+### Pexscape is an app that lets you browse and set curated real-time photos as your wallpaper. It leverages the Pexels API to provide a vast collection of high-quality images, making it a perfect choice for anyone who wants to personalize their device with fresh, eye-catching wallpapers.
 
   
 
