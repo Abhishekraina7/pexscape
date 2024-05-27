@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pexscape/full_image_screen.dart';
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
-
+import 'package:shimmer/shimmer.dart';
 
 
 class Wallpapers extends StatefulWidget {
@@ -14,13 +13,15 @@ class Wallpapers extends StatefulWidget {
 }
 
 class _WallpapersState extends State<Wallpapers> {
+
+  // following are different variables being used in the whole project for different functionalities
+
    List<dynamic>pre_defined_options = ['Nature Landscapes','Minimalist Art','Abstract Art','Pop Culture','Computers'];
    List<dynamic> image = [];
    int page_no  = 1;
    final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi'; // API key from Pexel website, which will act as the Authorization header
    late String searchQuery;
    int selectedIndex = -1;
-   final NotchBottomBarController _pageController = NotchBottomBarController();
 
    @override
   void initState() { // We used this so that the first thing that happens when widget tree is build is to call the fetch-api function
@@ -77,10 +78,17 @@ class _WallpapersState extends State<Wallpapers> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Center(child: Text("PexScape",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),)),
+        title:  Center(child: Shimmer.fromColors(
+          baseColor: Colors.blue,
+          highlightColor: Colors.red,
+          child:  const Text("Pexscape", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+        ),
+        ),
         automaticallyImplyLeading: false, // This line removes the back arrow which was coming bacause of Navigation from the SplashScreen
       ),
-      body: Column(
+      body:
+      Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -158,24 +166,36 @@ class _WallpapersState extends State<Wallpapers> {
                         childAspectRatio: 2/2,
                          mainAxisSpacing: 10,
                   ),
-                  itemBuilder: (context, index){
-
-                  return GestureDetector( // GestureDetector function takes the touch as input and immediately transfers the Image url of the image to the FullImage screen
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => FullImage(imageUrl: image[index]['src']['portrait'], photoGrapher_name: image[index]['photographer'],),)); // this is the path for pushing the url of the image on which the touch was detected
-                    },
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(0)),
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                        child: Image(image: NetworkImage(image[index]['src']['tiny']),fit: BoxFit.cover),
+                  itemBuilder: (context, index)
+                  {
+                  if(image[index] != null){
+                    return GestureDetector( // GestureDetector function takes the touch as input and immediately transfers the Image url of the image to the FullImage screen
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => FullImage(imageUrl: image[index]['src']['portrait'], photoGrapher_name: image[index]['photographer'],),)); // this is the path for pushing the url of the image on which the touch was detected
+                      },
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(0)),
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                          child: Image(image: NetworkImage(image[index]['src']['tiny']),fit: BoxFit.cover),
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
+                  else{
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!, // Adjust base color for desired shimmer effect
+                        highlightColor: Colors.grey[100]!, // Adjust highlight color for desired shimmer effect
+                        child: Container(
+                          color: Colors.blue,
+                          child: const  Text('Loading content'),
+                        ),
+                      );
+                  }
                   }
               ),
           ),
-         const  SizedBox(height: 10),
+         const  SizedBox(height: 5),
           // InkWell( // this function takes the touch as input and output response is set by the user using the OnTap
           //   onTap: (){
           //     loadMoreImage(); // In our case we are calling the Loadmore function to load more images in the gridview
@@ -192,49 +212,7 @@ class _WallpapersState extends State<Wallpapers> {
           // )
         ],
       ),
-      bottomNavigationBar: AnimatedNotchBottomBar(
-        notchBottomBarController: _pageController,
-        bottomBarItems: const [
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.home_filled,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.home_filled,
-              color: Colors.blueAccent,
-            ),
-            itemLabel: 'Page1',
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.category,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.category,
-              color: Colors.blueAccent,
-            ),
-            itemLabel: 'Page2',
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.monitor_heart_rounded,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.monitor_heart_rounded,
-              color: Colors.blueAccent,
-            ),
-            itemLabel: 'Page2',
-          ),
-        ],
-        onTap: (int index){
-           // TODO: oye complete this shit
-        },
-        kIconSize: 6,
-        kBottomRadius: 8,
-      ),
+
     );
   }
 }
