@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pexscape/bottom_navigation_bar.dart';
+import 'package:pexscape/bottom_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
              Center(
                child: InkWell(
                  onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNav()),
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavBar()),
                    );
                    },
                  child: Container(
