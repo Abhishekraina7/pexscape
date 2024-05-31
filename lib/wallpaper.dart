@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pexscape/full_image_screen.dart';
 import 'package:shimmer/shimmer.dart';
+import 'api_key.dart';
 
 
 class Wallpapers extends StatefulWidget {
@@ -19,7 +20,6 @@ class _WallpapersState extends State<Wallpapers> {
    List<dynamic>pre_defined_options = ['Nature Landscapes','Minimalist Art','Abstract Art','Pop Culture','Computers'];
    List<dynamic> image = [];
    int page_no  = 1;
-   final String api_Key = 'KxhCp0iVqaWOYPRux5rQ0jNZpXGi8DShHRTpZpSOpGJTzA0eI0sy7rhi'; // API key from Pexel website, which will act as the Authorization header
    late String searchQuery;
    int selectedIndex = -1;
 
@@ -28,6 +28,9 @@ class _WallpapersState extends State<Wallpapers> {
      super.initState();
      fetchapi();
    }
+
+
+
    // fetchapi function makes the api call based on the Search query or the default.
    Future<void> fetchapi({String query = ''}) async {
      // Optional query parameter
@@ -38,11 +41,12 @@ class _WallpapersState extends State<Wallpapers> {
      await http.get( // here the http.get request is sent to the pexels servers
        Uri.parse(url),
        headers: {
-         'Authorization': api_Key, // our api_key as the authorization header
+         'Authorization': API_KEY, // our api_key as the authorization header
        },
      ).then((value) {
        if (value.statusCode == 200) {
          Map result = jsonDecode(value.body); // added the response to a hash map ( Key: value pair)
+         print(result);
          setState(() {
            if (page_no == 1) {
              image = result['photos']; // Clear image list for initial search
