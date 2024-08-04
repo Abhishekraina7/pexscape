@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:pexscape/wallpaper.dart';
-
 import 'Downloaded_wallpapers.dart';
 import 'categories.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+
+
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -37,7 +40,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
           ),
           FlashyTabBarItem(
-            icon: const Icon(Icons.category_rounded,color: Colors.black,),
+            icon: const Icon(FontAwesomeIcons.wandMagicSparkles,color: Colors.pink,),
             title: const Text('Categories',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),),
           ),
           FlashyTabBarItem(
