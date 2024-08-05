@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
-// GEMINI API: AIzaSyDMaCyqBBImhn56_y6qZZmHrbVaxV-v4ug
-// OPENAI API: sk-proj-NoKss0LACeqTk0kU4Sf7T3BlbkFJwYTXkQfbR5RpwkM8mhRw (Image gen)
+
+
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
