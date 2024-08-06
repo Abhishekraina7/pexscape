@@ -4,7 +4,6 @@ import 'package:flutter/painting.dart';
 
 
 
-
 class Categories extends StatefulWidget {
   const Categories({super.key});
 
@@ -39,7 +38,7 @@ class _CategoriesState extends State<Categories> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.09,
             child: Row(
               children: <Widget>[
                 Align(
