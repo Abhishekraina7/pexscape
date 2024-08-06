@@ -49,11 +49,17 @@ class _CategoriesState extends State<Categories> {
                   ),
                 ),
                 const SizedBox(
-                  width: 170,
+                  width: 150,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(right: 25),
-                  child: const Text('History',style: TextStyle(fontWeight: FontWeight.normal,fontSize: 17,color: Colors.grey),),
+                  padding: const EdgeInsets.only(right: 10),
+                  child: const Row(
+                      children: <Widget>[
+                        Icon(Icons.history,color: Colors.grey,),
+                       Text('History',style: TextStyle(fontWeight: FontWeight.normal,fontSize: 17,color: Colors.grey),
+                      ),
+                  ],
+                  ),
                 ),
               ],
             ),
@@ -109,7 +115,7 @@ class _CategoriesState extends State<Categories> {
             ),
           ),
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
           Container(
             height: 20,
@@ -118,23 +124,57 @@ class _CategoriesState extends State<Categories> {
               alignment: Alignment.centerLeft,
                 child:  Text('Inspirations',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),)),
           ),
+          const SizedBox(
+            height: 5,
+          ),
           Expanded(
             child:
           ListView(
             scrollDirection: Axis.horizontal,
-            children: <Widget>[
+            children: [
               Container(
                 margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                height: 20,
+                width: 200,
                 decoration:  BoxDecoration(
                   color: Colors.grey,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(40),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                height: 20,
+                width: 200,
                 decoration:  BoxDecoration(
                   color: Colors.grey,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                height: 20,
+                width: 200,
+                decoration:  BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                height: 20,
+                width: 200,
+                decoration:  BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
+                height: 20,
+                width: 200,
+                decoration:  BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(40),
                 ),
               ),
             ],
