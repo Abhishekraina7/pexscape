@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-
-
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+//
 class Categories extends StatefulWidget {
   const Categories({super.key});
 
@@ -12,7 +12,41 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
+
+  late String input_query; // variable for storing the user prompt
+
   @override
+
+  void initState()
+  {
+    super.initState();
+    api_calling_function();
+  }
+
+  Future<Uint8List> api_calling_function ({String query = ''}) async {
+    final url = Uri.parse('https://api-inference.huggingface.co/models/Artples/LAI-ImageGeneration-vSDXL-2');
+    final headers = {
+      'Authorization': 'Bearer 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',
+      'Content-Type': 'application/json',
+    };
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(query),
+    );
+
+    if (response.statusCode == 200) {
+      return response.bodyBytes;
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
+
+  Future<void > generate_image ()  async{// this function is called when you click on the create button on the UI
+
+    await api_calling_function(query: input_query);
+  }
+
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
@@ -89,21 +123,27 @@ class _CategoriesState extends State<Categories> {
               ),
               onChanged: (value) {
                 setState(() {
-                     // Update search query on input change
+                  input_query = value;
                 });
               },
             ),
           ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(110, 15, 10, 10),
-            height: 60,
-            width: 300,
-            decoration: const BoxDecoration(
-                color: Colors.black,
-                shape:BoxShape.rectangle,
-                borderRadius: const BorderRadius.all(Radius.circular(20.0))
+          GestureDetector( // When prompt is entered press this to make the api call
+            onTap: (){
+              setState(() {
+              generate_image();
+            });},
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(110, 15, 10, 10),
+              height: 60,
+              width: 300,
+              decoration: const BoxDecoration(
+                  color: Colors.black,
+                  shape:BoxShape.rectangle,
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0))
+              ),
+              child: const  Text('Create',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white),),
             ),
-            child: const  Text('Create',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white),),
           ),
            const SizedBox(
             height: 30,
