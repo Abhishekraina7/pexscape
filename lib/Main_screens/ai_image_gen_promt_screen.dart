@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pexscape/Resuable_components/Containers.dart';
+import 'ai_imagery_result_screen.dart';
 //
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -131,9 +132,10 @@ class _CategoriesState extends State<Categories> {
           ),
           GestureDetector( // When prompt is entered press this to make the api call
             onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const Ai_Output_Screen()));
               setState(() {
               generate_image();
-            });},
+              });},
             child: Container(
               padding: const EdgeInsets.fromLTRB(110, 15, 10, 10),
               height: 60,
@@ -173,11 +175,11 @@ class _CategoriesState extends State<Categories> {
           ListView(
             scrollDirection: Axis.horizontal,
             children: const [
-              Containers(),
-              Containers(),
-              Containers(),
-              Containers(),
-              Containers(),
+              Containers(height: 500, width: 180),
+              Containers(height: 500, width: 180),
+              Containers(height: 500, width: 180),
+              Containers(height: 500, width: 180),
+              Containers(height: 500, width: 180),
             ],
           ),
           ),
