@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pexscape/Resuable_components/Containers.dart';
 //
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -171,52 +172,12 @@ class _CategoriesState extends State<Categories> {
             child:
           ListView(
             scrollDirection: Axis.horizontal,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                height: 20,
-                width: 200,
-                decoration:  BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                height: 20,
-                width: 200,
-                decoration:  BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                height: 20,
-                width: 200,
-                decoration:  BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                height: 20,
-                width: 200,
-                decoration:  BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5.0, right: 5.0,top: 5.0),
-                height: 20,
-                width: 200,
-                decoration:  BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
+            children: const [
+              Containers(),
+              Containers(),
+              Containers(),
+              Containers(),
+              Containers(),
             ],
           ),
           ),
@@ -226,12 +187,7 @@ class _CategoriesState extends State<Categories> {
   }
 }
 
-//
-// SizedBox(
-// width: MediaQuery.of(context).size.width * 1, // This makes the width of sized box adjust automattically with the screen on different mobile phones
-// height: MediaQuery.of(context).size.height * 0.5,
-// child: Container(
-// color: Colors.yellow,
-// child: const Center(child: Text("Space for creative or AI touch",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),),),
-// ),
-// ),
+
+
+
+
