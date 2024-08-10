@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:pexscape/full_image_screen.dart';
+import 'package:pexscape/Main_screens/full_image_screen.dart';
 import 'package:shimmer/shimmer.dart';
-import 'api_key.dart';
+import '../api_key.dart';
 
 
 class Wallpapers extends StatefulWidget {
@@ -11,50 +11,49 @@ class Wallpapers extends StatefulWidget {
 
   @override
   State<Wallpapers> createState() => _WallpapersState();
-}
+                                                  }
 
-class _WallpapersState extends State<Wallpapers> {
+   class _WallpapersState extends State<Wallpapers> {
 
   // following are different variables being used in the whole project for different functionalities
 
    List<dynamic>pre_defined_options = ['Nature Landscapes','Minimalist Art','Abstract Art','Pop Culture','Computers'];
-   List<dynamic> image = [];
-   int page_no  = 1;
-   late String searchQuery;
-   int selectedIndex = -1;
+    List<dynamic> image = [];
+     int page_no  = 1;
+      late String searchQuery;
+        int selectedIndex = -1;
 
-   @override
-  void initState() { // We used this so that the first thing that happens when widget tree is build is to call the fetch-api function
+     @override
+    void initState() {
+     // We used this so that the first thing that happens when widget tree is build is to call the fetch-api function
      super.initState();
-     fetchapi();
+      fetchapi();
    }
 
-
-
    // fetchapi function makes the api call based on the Search query or the default.
-   Future<void> fetchapi({String query = ''}) async {
+     Future<void> fetchapi({String query = ''}) async {
      // Optional query parameter
-     String url = 'https://api.pexels.com/v1/curated?per_page=80&page=$page_no';
-     if (query.isNotEmpty) { // If there is query in the search box then make a api call with query parameter entered by the user
-       url = 'https://api.pexels.com/v1/search?query=$query&per_page=80&page=$page_no';
-     }
+      String url = 'https://api.pexels.com/v1/curated?per_page=80&page=$page_no';
+        if (query.isNotEmpty) { // If there is query in the search box then make a api call with query parameter entered by the user
+         url = 'https://api.pexels.com/v1/search?query=$query&per_page=80&page=$page_no';
+       }
      await http.get( // here the http.get request is sent to the pexels servers
-       Uri.parse(url),
-       headers: {
+        Uri.parse(url),
+         headers: {
          'Authorization': API_KEY, // our api_key as the authorization header
-       },
-     ).then((value) {
+       },).then((value) {
        if (value.statusCode == 200) {
          Map result = jsonDecode(value.body); // added the response to a hash map ( Key: value pair)
-         print(result);
-         setState(() {
-           if (page_no == 1) {
-             image = result['photos']; // Clear image list for initial search
-           } else {
-             image.addAll(result['photos']); // Add fetched images on load more
-           }
-         });
-       } else {
+           print(result);
+             setState(() {
+               if (page_no == 1) {
+                 image = result['photos']; // Clear image list for initial search
+                                 }
+               else {
+                    image.addAll(result['photos']); // Add fetched images on load more
+               } });
+       }
+       else {
          print("Error fetching data");
        }
      });
@@ -102,7 +101,8 @@ class _WallpapersState extends State<Wallpapers> {
                 borderRadius: BorderRadius.all(Radius.circular(10.0))
               ),
               // This is used to take the seach query from the user
-              child: Row(children: [
+              child: Row(
+                children: [
                 SizedBox(
                   width: 320,
                   child: TextField(
@@ -120,7 +120,8 @@ class _WallpapersState extends State<Wallpapers> {
                       });
                     },
                   ),
-                ),IconButton(
+                ),
+                IconButton(
                   icon: const Icon(Icons.search, color: Colors.black),
                   onPressed: searchImages, // Call searchImages on icon tap
                 ),

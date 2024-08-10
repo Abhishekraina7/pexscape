@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pexscape/bottom_nav_bar.dart';
+import 'package:pexscape/Essential_feature_Folder/bottom_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatelessWidget {

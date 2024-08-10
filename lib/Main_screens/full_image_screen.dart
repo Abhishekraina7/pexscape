@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart'; // Flutter plugin for getting
 import 'package:http/http.dart' as http;
 
 class FullImage extends StatelessWidget {
+
   final String photoGrapher_name; // variable to store the photographer name
   final String imageUrl; // stores the imageUrl passed from the Wallpaper screen
 
@@ -20,7 +21,7 @@ class FullImage extends StatelessWidget {
       );
       return;
     }
-
+  
     final directory = await getApplicationDocumentsDirectory();
     final fileName = Uri.parse(imageUrl).pathSegments.last; // Extract filename from URL
     final filePath = '${directory.path}/$fileName';

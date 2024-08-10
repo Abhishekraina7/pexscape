@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
-import 'package:pexscape/wallpaper.dart';
-import 'Downloaded_wallpapers.dart';
-import 'categories.dart';
+import 'package:pexscape/Main_screens/Main_wallpaper_screen.dart';
+import '../Main_screens/Downloaded_wallpapers_screen.dart';
+import '../Main_screens/ai_image_gen_promt_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -40,8 +40,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
           ),
           FlashyTabBarItem(
-            icon: const Icon(FontAwesomeIcons.wandMagicSparkles,color: Colors.pink,),
-            title: const Text('Categories',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),),
+            icon: const Icon(FontAwesomeIcons.wandMagicSparkles,color: Colors.blue,),
+            title: const Text('GEN AI',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800),),
           ),
           FlashyTabBarItem(
             icon: const Icon(Icons.download,color: Colors.black,),
