@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:pexscape/Resuable_components/Containers.dart';
 import 'ai_imagery_result_screen.dart';
 //
+
+
 class Categories extends StatefulWidget {
   const Categories({super.key});
 
@@ -102,7 +104,7 @@ class _CategoriesState extends State<Categories> {
           ),
           SizedBox(
             width: 350,
-            height: 250,
+            height: 237,
             child: TextField(
               minLines: 8,
               maxLines: null,
@@ -132,7 +134,7 @@ class _CategoriesState extends State<Categories> {
           ),
           GestureDetector( // When prompt is entered press this to make the api call
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const Ai_Output_Screen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>  Ai_Output_Screen()));
               setState(() {
               generate_image();
               });},
@@ -152,15 +154,6 @@ class _CategoriesState extends State<Categories> {
             height: 30,
           ),
           Container(
-            height: 0.2,
-            decoration: const BoxDecoration(
-                color: Colors.grey
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
             height: 20,
             padding: const EdgeInsets.only(left: 30),
             child: const Align(
@@ -168,7 +161,7 @@ class _CategoriesState extends State<Categories> {
                 child:  Text('Inspirations',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),)),
           ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
           Expanded(
             child:
