@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pexscape/Main_screens/ai_image_gen_promt_screen.dart';
+
+
 
 
 class Ai_Output_Screen extends StatefulWidget {
@@ -75,39 +78,40 @@ class _Ai_Output_ScreenState extends State<Ai_Output_Screen> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 50 ,
+              height: 60,
               child: TextField(
+                enabled: true,
+                readOnly: true,
                 minLines: 8,
                 maxLines: null,
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.edit_outlined),
+                decoration: InputDecoration(
+                  suffixIcon: InkWell(
+                      onTap: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Categories()));
+                      },
+                      child: const Icon(Icons.edit_outlined)),
                   hintText: 'Describe your idea here',
-                  hintStyle: TextStyle(fontFamily: 'sans',color: Colors.grey),
+                  hintStyle: const TextStyle(fontFamily: 'sans',color: Colors.grey),
                   focusColor: Colors.black,
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     borderSide: BorderSide(color: Colors.grey),
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     borderSide: BorderSide(color: Colors.black), // change to your desired color
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     borderSide: BorderSide(color: Colors.grey), // change to your desired color
                   ),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    // TODO: When you click, new screen comes and you enter a modified prompt and click create button
-                  });
-                },
               ),
             ),
             const SizedBox(height: 10,),
+
             GestureDetector( // When prompt is entered press this to make the api call
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const Ai_Output_Screen()));
                 setState(() {
                   // TODO: when you click here you again call make api call with same prompt
                 });},
