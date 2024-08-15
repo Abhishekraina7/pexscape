@@ -81,7 +81,7 @@ Pexscape is built using the following technologies:
 
   ## Contributions 🤝
 
-  I would love if anyone interested in contributing to this project. 
+  I would be happyif anyone interested in contributing to this project. 
 
 
 
