@@ -79,7 +79,7 @@ Pexscape is built using the following technologies:
 *   **InteractiveViewer (Optional):** Allows zooming and panning on full-screen images (requires the `interactive_viewer` package).
 *   **flutter\_wallpaper\_manager (Optional):** Enables setting images as wallpaper directly from the app (requires the `flutter_wallpaper_manager` package and proper permission handling).\
 
-  ## Contributions 🤝
+  ## Contributing 🤝
 
   I would be happyif anyone interested in contributing to this project. 
 
